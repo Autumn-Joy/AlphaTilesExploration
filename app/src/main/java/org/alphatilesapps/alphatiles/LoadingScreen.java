@@ -201,9 +201,13 @@ public class LoadingScreen extends AppCompatActivity {
                 LOGGER.info("LoadProgress: next task: load word audio " + i + " of " + wordList.size() + ": " + word.wordInLWC + " (" + word.wordInLOP + ")");
             }
             int resId = res.getIdentifier(word.wordInLWC, "raw", context.getPackageName());
-            int duration = getAssetDuration(resId) + 100;
-            wordAudioIDs.put(word.wordInLWC, gameSounds.load(context, resId, 1));
-            word.duration = duration;
+            if (resId != 0) {
+                int duration = getAssetDuration(resId) + 100;
+                wordAudioIDs.put(word.wordInLWC, gameSounds.load(context, resId, 1));
+                word.duration = duration;
+            } else {
+                totalAudio--;
+            }
         }
         LOGGER.info("LoadProgress: completed loadWordAudio()");
     }
@@ -219,9 +223,13 @@ public class LoadingScreen extends AppCompatActivity {
                 LOGGER.info("LoadProgress: next task: load syllable audio " + i + " of " + syllableList.size() + ": " + syllable.text + " (" + syllable.audioName + ")");
             }
             int resId = res.getIdentifier(syllable.audioName, "raw", context.getPackageName());
-            int duration = getAssetDuration(resId) + 100;
-            syllableAudioIDs.put(syllable.audioName, gameSounds.load(context, resId, 2));
-            syllable.duration = duration;
+            if (resId != 0) {
+                int duration = getAssetDuration(resId) + 100;
+                syllableAudioIDs.put(syllable.audioName, gameSounds.load(context, resId, 2));
+                syllable.duration = duration;
+            } else {
+                totalAudio--;
+            }
         }
         LOGGER.info("LoadProgress: completed loadSyllableAudio()");
     }
@@ -239,9 +247,13 @@ public class LoadingScreen extends AppCompatActivity {
             }
             if(!tile.audioForThisTileType.equals("zz_no_audio_needed")) {
                 int resId = res.getIdentifier(tile.audioForThisTileType, "raw", context.getPackageName());
-                int duration = getAssetDuration(resId) + 100;
-                tileAudioIDs.put(tile.audioForThisTileType, gameSounds.load(context, resId, 2));
-                tileDurations.put(tile.audioForThisTileType, duration);
+                if (resId != 0) {
+                    int duration = getAssetDuration(resId) + 100;
+                    tileAudioIDs.put(tile.audioForThisTileType, gameSounds.load(context, resId, 2));
+                    tileDurations.put(tile.audioForThisTileType, duration);
+                } else {
+                    totalAudio--;
+                }
             } else {
                 totalAudio--;
             }

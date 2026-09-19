@@ -258,7 +258,9 @@ public class Start extends AppCompatActivity {
             if (header) {
                 header = false;
             } else {
-                colorList.add(thisLineArray[2]);
+                if (thisLineArray.length >= 3) {
+                    colorList.add(thisLineArray[2]);
+                }
             }
         }
     }
@@ -284,26 +286,31 @@ public class Start extends AppCompatActivity {
             String thisLine = scanner.nextLine();
             String[] thisLineArray = thisLine.split("\t");
             if (header) {
-                tileList.baseTitle = thisLineArray[0];
-                tileList.alt1Title = thisLineArray[1];
-                tileList.alt2Title = thisLineArray[2];
-                tileList.alt3Title = thisLineArray[3];
-                tileList.tileTypeTitle = thisLineArray[4];
-                tileList.audioForTileTitle = thisLineArray[5];
-                tileList.upperTileTitle = thisLineArray[6];
-                tileList.tileTypeBTitle = thisLineArray[7];
-                tileList.audioForTileBTitle = thisLineArray[8];
-                tileList.tileTypeCTitle = thisLineArray[9];
-                tileList.audioForTileCTitle = thisLineArray[10];
-                tileList.iconicWordTitle = thisLineArray[11];
-                tileList.tileColorTitle = thisLineArray[12];
-                tileList.tileDuration3Title = "";
-                tileList.stageOfFirstAppearanceTitle = thisLineArray[14];
-                tileList.stageOfFirstAppearanceTitleType2 = thisLineArray[15];
-                tileList.stageOfFirstAppearanceTitleType3 = thisLineArray[16];
+                if (thisLineArray.length >= 17) {
+                    tileList.baseTitle = thisLineArray[0];
+                    tileList.alt1Title = thisLineArray[1];
+                    tileList.alt2Title = thisLineArray[2];
+                    tileList.alt3Title = thisLineArray[3];
+                    tileList.tileTypeTitle = thisLineArray[4];
+                    tileList.audioForTileTitle = thisLineArray[5];
+                    tileList.upperTileTitle = thisLineArray[6];
+                    tileList.tileTypeBTitle = thisLineArray[7];
+                    tileList.audioForTileBTitle = thisLineArray[8];
+                    tileList.tileTypeCTitle = thisLineArray[9];
+                    tileList.audioForTileCTitle = thisLineArray[10];
+                    tileList.iconicWordTitle = thisLineArray[11];
+                    tileList.tileColorTitle = thisLineArray[12];
+                    tileList.tileDuration3Title = "";
+                    tileList.stageOfFirstAppearanceTitle = thisLineArray[14];
+                    tileList.stageOfFirstAppearanceTitleType2 = thisLineArray[15];
+                    tileList.stageOfFirstAppearanceTitleType3 = thisLineArray[16];
+                }
 
                 header = false;
             } else {
+                if (thisLineArray.length < 17) {
+                    continue;
+                }
 
                 // Sort information for staged introduction, including among potential second or third types of a tile
                 int stageOfFirstAppearance, stageOfFirstAppearanceType2, stageOfFirstAppearanceType3;
@@ -337,7 +344,7 @@ public class Start extends AppCompatActivity {
                 distractors.add(thisLineArray[2]);
                 distractors.add(thisLineArray[3]);
                 Tile tile = new Tile(thisLineArray[0], distractors, thisLineArray[4], thisLineArray[5], thisLineArray[6],thisLineArray[7], thisLineArray[8], thisLineArray[9], thisLineArray[10],thisLineArray[11], 0, 0,stageOfFirstAppearance, stageOfFirstAppearanceType2, stageOfFirstAppearanceType3,thisLineArray[4], stageOfFirstAppearance, thisLineArray[5]);
-                if (!tile.hasNull()) {
+                if (!tile.hasNull() && !tile.text.isEmpty()) {
                     tileList.add(tile);
                     if (!tile.typeOfThisTileInstance.equals("SAD") && !(tile.audioForThisTileType.equals("zz_no_audio_needed") && !tile.typeOfThisTileInstance.equals("PC"))) {
                         tileListNoSAD.add(tile); // placeholder consonants may be added even if they don't have audio
@@ -345,7 +352,7 @@ public class Start extends AppCompatActivity {
                 }
                 if(!tile.tileTypeB.equals("none")){
                     tile = new Tile(thisLineArray[0], distractors, thisLineArray[4], thisLineArray[5], thisLineArray[6],thisLineArray[7], thisLineArray[8], thisLineArray[9], thisLineArray[10],thisLineArray[11], 0, 0,stageOfFirstAppearance, stageOfFirstAppearanceType2, stageOfFirstAppearanceType3,thisLineArray[7], stageOfFirstAppearanceType2, thisLineArray[8]);
-                    if (!tile.hasNull()) {
+                    if (!tile.hasNull() && !tile.text.isEmpty()) {
                         tileList.add(tile);
                         if (!tile.typeOfThisTileInstance.equals("SAD") && !(tile.audioForThisTileType.equals("zz_no_audio_needed") && !tile.typeOfThisTileInstance.equals("PC"))) {
                             tileListNoSAD.add(tile); // placeholder consonants may be added even if they don't have audio
@@ -354,7 +361,7 @@ public class Start extends AppCompatActivity {
                 }
                 if(!tile.tileTypeC.equals("none")){
                     tile = new Tile(thisLineArray[0], distractors, thisLineArray[4], thisLineArray[5], thisLineArray[6],thisLineArray[7], thisLineArray[8], thisLineArray[9], thisLineArray[10],thisLineArray[11], 0, 0,stageOfFirstAppearance, stageOfFirstAppearanceType2, stageOfFirstAppearanceType3,thisLineArray[9], stageOfFirstAppearanceType3, thisLineArray[10]);
-                    if (!tile.hasNull()) {
+                    if (!tile.hasNull() && !tile.text.isEmpty()) {
                         tileList.add(tile);
                         if (!tile.typeOfThisTileInstance.equals("SAD") && !(tile.audioForThisTileType.equals("zz_no_audio_needed") && !tile.typeOfThisTileInstance.equals("PC"))) {
                             tileListNoSAD.add(tile); // placeholder consonants may be added even if they don't have audio
@@ -416,20 +423,24 @@ public class Start extends AppCompatActivity {
             String thisLine = scanner.nextLine();
             String[] thisLineArray = thisLine.split("\t", 7);
             if (header) {
-                syllableList.syllableTitle = thisLineArray[0];
-                syllableList.distractorsTitles = new String[]{thisLineArray[1], thisLineArray[2], thisLineArray[3]};
-                syllableList.syllableAudioNameTitle = thisLineArray[4];
-                syllableList.syllableDurationTitle = thisLineArray[5];
-                syllableList.colorTitle = thisLineArray[6];
+                if (thisLineArray.length >= 7) {
+                    syllableList.syllableTitle = thisLineArray[0];
+                    syllableList.distractorsTitles = new String[]{thisLineArray[1], thisLineArray[2], thisLineArray[3]};
+                    syllableList.syllableAudioNameTitle = thisLineArray[4];
+                    syllableList.syllableDurationTitle = thisLineArray[5];
+                    syllableList.colorTitle = thisLineArray[6];
+                }
                 header = false;
             } else {
-                ArrayList<String> distractors = new ArrayList<>();
-                distractors.add(thisLineArray[1]);
-                distractors.add(thisLineArray[2]);
-                distractors.add(thisLineArray[3]);
-                Syllable syllable = new Syllable(thisLineArray[0], distractors, thisLineArray[4], Integer.parseInt(thisLineArray[5]), thisLineArray[6]);
-                if (!syllable.hasNull()) {
-                    syllableList.add(syllable);
+                if (thisLineArray.length >= 7) {
+                    ArrayList<String> distractors = new ArrayList<>();
+                    distractors.add(thisLineArray[1]);
+                    distractors.add(thisLineArray[2]);
+                    distractors.add(thisLineArray[3]);
+                    Syllable syllable = new Syllable(thisLineArray[0], distractors, thisLineArray[4], Integer.parseInt(thisLineArray[5]), thisLineArray[6]);
+                    if (!syllable.hasNull() && !syllable.text.isEmpty()) {
+                        syllableList.add(syllable);
+                    }
                 }
             }
         }
@@ -454,17 +465,21 @@ public class Start extends AppCompatActivity {
             String thisLine = scanner.nextLine();
             String[] thisLineArray = thisLine.split("\t");
             if (header) {
-                wordList.wordInLWCTitle = thisLineArray[0];
-                wordList.wordInLOPTitle = thisLineArray[1];
-                wordList.durationTitle = thisLineArray[2];
-                wordList.mixedDefsTitle = thisLineArray[3];
-                wordList.adjustmentTitle = ""; //set during LoadingScreen activity
-                wordList.stageOfFirstAppearanceTitle = thisLineArray[5];
+                if (thisLineArray.length >= 6) {
+                    wordList.wordInLWCTitle = thisLineArray[0];
+                    wordList.wordInLOPTitle = thisLineArray[1];
+                    wordList.durationTitle = thisLineArray[2];
+                    wordList.mixedDefsTitle = thisLineArray[3];
+                    wordList.adjustmentTitle = ""; //set during LoadingScreen activity
+                    wordList.stageOfFirstAppearanceTitle = thisLineArray[5];
+                }
                 header = false;
             } else {
-                Word word = new Word(thisLineArray[0], thisLineArray[1], Integer.parseInt(thisLineArray[2]), thisLineArray[3], "", thisLineArray[5]);
-                if (!word.hasNull()) {
-                    wordList.add(word);
+                if (thisLineArray.length >= 6) {
+                    Word word = new Word(thisLineArray[0], thisLineArray[1], Integer.parseInt(thisLineArray[2]), thisLineArray[3], "", thisLineArray[5]);
+                    if (!word.hasNull() && !word.wordInLOP.isEmpty()) {
+                        wordList.add(word);
+                    }
                 }
             }
         }
@@ -649,13 +664,17 @@ public class Start extends AppCompatActivity {
             String thisLine = scanner.nextLine();
             String[] thisLineArray = thisLine.split("\t");
             if (header) {
-                keyList.keysTitle = thisLineArray[0];
-                keyList.colorTitle = thisLineArray[1];
+                if (thisLineArray.length >= 2) {
+                    keyList.keysTitle = thisLineArray[0];
+                    keyList.colorTitle = thisLineArray[1];
+                }
                 header = false;
             } else {
-                Key key = new Key(thisLineArray[0], thisLineArray[1]);
-                if (!key.hasNull()) {
-                    keyList.add(key);
+                if (thisLineArray.length >= 2) {
+                    Key key = new Key(thisLineArray[0], thisLineArray[1]);
+                    if (!key.hasNull()) {
+                        keyList.add(key);
+                    }
                 }
             }
         }
@@ -670,22 +689,26 @@ public class Start extends AppCompatActivity {
             String thisLine = scanner.nextLine();
             String[] thisLineArray = thisLine.split("\t");
             if (header) {
-                gameList.gameNumberTitle = thisLineArray[0];
-                gameList.gameCountryTitle = thisLineArray[1];
-                gameList.gameLevelTitle = thisLineArray[2];
-                gameList.gameColorTitle = thisLineArray[3];
-                gameList.gameInstrLabelTitle = thisLineArray[4];
-                gameList.gameInstrDurationTitle = thisLineArray[5];
-                gameList.gameModeTitle = thisLineArray[6];
-                gameList.gameStageTitle = thisLineArray[7];
+                if (thisLineArray.length >= 8) {
+                    gameList.gameNumberTitle = thisLineArray[0];
+                    gameList.gameCountryTitle = thisLineArray[1];
+                    gameList.gameLevelTitle = thisLineArray[2];
+                    gameList.gameColorTitle = thisLineArray[3];
+                    gameList.gameInstrLabelTitle = thisLineArray[4];
+                    gameList.gameInstrDurationTitle = thisLineArray[5];
+                    gameList.gameModeTitle = thisLineArray[6];
+                    gameList.gameStageTitle = thisLineArray[7];
+                }
                 header = false;
             } else {
-                Game game = new Game(thisLineArray[0], thisLineArray[1], thisLineArray[2], thisLineArray[3], thisLineArray[4], thisLineArray[5], thisLineArray[6], thisLineArray[7]);
-                if (!game.hasNull()) {
-                    gameList.add(game);
-                }
-                if (thisLineArray[6].equals("S")) { //JP
-                    hasSyllableGames = true;
+                if (thisLineArray.length >= 8) {
+                    Game game = new Game(thisLineArray[0], thisLineArray[1], thisLineArray[2], thisLineArray[3], thisLineArray[4], thisLineArray[5], thisLineArray[6], thisLineArray[7]);
+                    if (!game.hasNull()) {
+                        gameList.add(game);
+                    }
+                    if (thisLineArray[6].equals("S")) { //JP
+                        hasSyllableGames = true;
+                    }
                 }
             }
         }
@@ -705,7 +728,9 @@ public class Start extends AppCompatActivity {
                 } else {
                     String thisLine = scanner.nextLine();
                     String[] thisLineArray = thisLine.split("\t");
-                    settingsList.put(thisLineArray[0], thisLineArray[1]);
+                    if (thisLineArray.length >= 2) {
+                        settingsList.put(thisLineArray[0], thisLineArray[1]);
+                    }
                 }
             }
         }
@@ -731,7 +756,9 @@ public class Start extends AppCompatActivity {
                 } else {
                     String thisLine = scanner.nextLine();
                     String[] thisLineArray = thisLine.split("\t");
-                    langInfoList.put(thisLineArray[0], thisLineArray[1]);
+                    if (thisLineArray.length >= 2) {
+                        langInfoList.put(thisLineArray[0], thisLineArray[1]);
+                    }
                 }
             }
         }
@@ -761,7 +788,9 @@ public class Start extends AppCompatActivity {
                 } else {
                     String thisLine = scanner.nextLine();
                     String[] thisLineArray = thisLine.split("\t");
-                    nameList.add(thisLineArray[1]);
+                    if (thisLineArray.length >= 2) {
+                        nameList.add(thisLineArray[1]);
+                    }
                 }
             }
         }
@@ -798,22 +827,22 @@ public class Start extends AppCompatActivity {
      */
     public void fillTextboxColors(){
         ArrayList<String> boxes = new ArrayList<>();
-        boxes.set(0, "Color for empty text box");
-        boxes.set(1, "Color for partially filled text box");
-        boxes.set(2, "Color for \"on the right track\"");
-        boxes.set(3, "Color for correct letters but incorrect tiles (Columbia CL4 only)");
-        boxes.set(4, "Color for incorrect text box");
+        boxes.add("Color for empty text box");
+        boxes.add("Color for partially filled text box");
+        boxes.add("Color for \"on the right track\"");
+        boxes.add("Color for correct letters but incorrect tiles (Columbia CL4 only)");
+        boxes.add("Color for incorrect text box");
 
-        for (int i = 0; i < boxColors.size(); i++){
-            boxColors.set(i, settingsList.find(boxes.get(i)));
+        for (int i = 0; i < boxes.size(); i++){
+            boxColors.add(settingsList.find(boxes.get(i)));
         }
 
         ArrayList<String> defaults = new ArrayList<>();
-        defaults.set(0, "Grey");
-        defaults.set(0, "Green");
-        defaults.set(0, "Yellow");
-        defaults.set(0, "Orange");
-        defaults.set(0, "Red");
+        defaults.add("Grey");
+        defaults.add("Green");
+        defaults.add("Yellow");
+        defaults.add("Orange");
+        defaults.add("Red");
 
         for (int i = 0; i < boxColors.size(); i++) {
             try {
