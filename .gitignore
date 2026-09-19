@@ -35,3 +35,8 @@
 /.idea/.gitignore
 *baselineProfiles
 */tokens/*
+
+# Local machine-specific validator path, not shared across devs
+/pathForValidator.txt
+# Scratch/tool output
+/.artifacts/
